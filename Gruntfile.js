@@ -7,9 +7,11 @@ module.exports = function(grunt) {
 			ALL_STYLES = SRC_DIR + 'css/**/*.css',
 			TESTS_DIR = SRC_DIR + 'test/',
 			UNIT_TESTS_FILES = TESTS_DIR + 'unit/**/*.js',
-			BDD_TESTS_FILES = TESTS_DIR + 'bdd/*.js';
+			BDD_TESTS_FILES = TESTS_DIR + 'bdd/*.js',
+			OUTPUT_DIR = 'dist/';
 
 	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 		csslint: {
 			all: {
 				files: {
@@ -151,19 +153,89 @@ module.exports = function(grunt) {
 			},
 			core: {
 				files: [SCRIPTS_DIR + 'core/**/*.js'],
-				tasks: ['jshint:core']
+				tasks: ['jshint:core', 'simplemocha:dev']
 			},
 			jquery: {
 				files: [SCRIPTS_DIR + 'zepto_jquery/**/*.js'],
-				tasks: ['jshint:jquery']
+				tasks: ['jshint:jquery', 'simplemocha:dev']
 			},
 			knockout: {
 				files: [SCRIPTS_DIR + 'knockout/**/*.js'],
-				tasks: ['jshint:knockout']
+				tasks: ['jshint:knockout', 'simplemocha:dev']
+
 			},
 			styles: {
 				files: [ALL_STYLES],
 				tasks: ['csslint']
+			}
+		},
+		simplemocha: {
+			options: {
+				timeout: 500, // Unit tests
+				ui: 'bdd'
+			},
+			dev: {
+				options: {
+					reporter: 'dot'
+				},
+				files: {
+					src: [UNIT_TESTS_FILES]
+				}
+			}
+		},
+		clean: [OUTPUT_DIR],
+		copy: {
+			main: {
+				files: [
+					{expand: true, cwd: SRC_DIR, src: ['img/**', '**/!(initial_*).html'], dest: OUTPUT_DIR},
+					{expand: true, cwd: './', src: ['vendor/**/!(almond.js)'], dest: OUTPUT_DIR + 'js/' }
+				]
+			}
+		},
+		cssmin: {
+			options: {
+				report: 'gzip'
+			},
+			minify: {
+				src: [ALL_STYLES],
+				dest: "dist/css/<%= pkg.name %>.min.css"
+			}
+		},
+		requirejs: {
+			options: {
+				baseUrl: SCRIPTS_DIR,
+				cjsTranslate: true,
+				useStrict: true,
+				preserveLicenseComments: false,
+				generateSourceMaps: true,
+				optimize: 'uglify2',
+				include: ['../../vendor/almond.js'] // runtime de requirejs
+			},
+			zeptoJQuery: {
+				options: {
+					name: 'zepto_jquery/main',
+					insertRequire: ['zepto_jquery/main'],
+					out: "dist/js/<%= pkg.name %>-zepto_jquery.min.js",
+					uglify2: {
+						report: 'gzip',
+						mangle: {
+							except: ['jQuery', 'Zepto']
+						}
+					}
+				}
+			},
+			ko: {
+				options: {
+					name: 'knockout/main',
+					insertRequire: ['knockout/main'],
+					out: "dist/js/<%= pkg.name %>-ko.min.js",
+					uglify2: {
+						report: 'gzip',
+						mangle: {
+							except: ['ko']
+						}
+					}
+				}
 			}
 		}
 	});
@@ -171,9 +243,23 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-csslint');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-simple-mocha');
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-requirejs');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
+
 
 	grunt.registerTask('default', [
 		'csslint',
-		'jshint'
+		'jshint',
+		'simplemocha:dev'
+	]);
+
+	grunt.registerTask('dist', [
+		'clean',
+		'cssmin',
+		'requirejs',
+		'copy'
 	]);
 };
