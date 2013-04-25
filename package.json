@@ -1,0 +1,23 @@
+{
+  "name": "todo",
+  "version": "0.1.0",
+  "description": "Another todo list app",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/serginator/taller-xpweek.git"
+  },
+  "keywords": [
+    "todo",
+    "grunt",
+    "ci"
+  ],
+  "author": "Sergio Ruiz",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-csslint": "~0.1.2",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-watch": "~0.3.1"
+  }
+}

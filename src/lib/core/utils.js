@@ -8,8 +8,7 @@ if (!Function.prototype.bind) {
 
     var aArgs = Array.prototype.slice.call(arguments, 1),
         fToBind = this,
-        FNOP = function () {
-        },
+        FNOP = function () {},
         FBound = function () {
           return fToBind.apply(this instanceof FNOP ? this : oThis, aArgs.concat(Array.prototype.slice.call(arguments)));
         };
