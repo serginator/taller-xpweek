@@ -3,12 +3,12 @@
 module.exports = function(grunt) {
 
 	var SRC_DIR = 'src/',
-			SCRIPTS_DIR = SRC_DIR + 'lib/',
-			ALL_STYLES = SRC_DIR + 'css/**/*.css',
-			TESTS_DIR = SRC_DIR + 'test/',
-			UNIT_TESTS_FILES = TESTS_DIR + 'unit/**/*.js',
-			BDD_TESTS_FILES = TESTS_DIR + 'bdd/*.js',
-			OUTPUT_DIR = 'dist/';
+		SCRIPTS_DIR = SRC_DIR + 'lib/',
+		ALL_STYLES = SRC_DIR + 'css/**/*.css',
+		TESTS_DIR = SRC_DIR + 'test/',
+		UNIT_TESTS_FILES = TESTS_DIR + 'unit/**/*.js',
+		BDD_TESTS_FILES = TESTS_DIR + 'bdd/*.js',
+		OUTPUT_DIR = 'dist/';
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
