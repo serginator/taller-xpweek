@@ -3,6 +3,7 @@ bdd.consultingTasks = function (newUI, expect) {
   "use strict";
 
   describe("The todo list apps allows to consult the tasks when the user enters the app", function () {
+    this.timeout(5000);
     var ui;
 
     beforeEach(function () {

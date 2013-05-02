@@ -36,6 +36,7 @@ bdd.doingTasks = function (newUI, expect) {
   }
 
   describe("The todo list apps allows to do/undo tasks", function () {
+    this.timeout(5000);
     describe("Given the application has been started and there are some tasks", function () {
       var ui, initialTasks;
 
