@@ -131,7 +131,8 @@ module.exports = function(grunt) {
 						chai: true,
 						bdd: true,
 						console: true,
-						before: true
+						before: true,
+						mocha: true
 					}
 				},
 				files: {

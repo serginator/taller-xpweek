@@ -30,7 +30,6 @@ bdd.addingTasks = function (newUI, expect) {
   }
 
   describe("The todo list apps allows to add new tasks", function () {
-    this.timeout(5000);
     context("Given the application has been started and there are no tasks yet", function () {
       var ui;
 
