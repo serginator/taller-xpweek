@@ -245,10 +245,15 @@ module.exports = function(grunt) {
 				runnerPort: 9999,
 				configFile: 'karma.conf.js'
 			},
+			dev: {
+				singleRun: true,
+				reporters: ['dots'],
+				browsers: ['Chrome']
+			},
 			ci: {
 				singleRun: true,
 				reporters: ['dots', 'junit'],
-				browsers: ['PhantomJS', 'Firefox', 'Chrome']
+				browsers: ['PhantomJS', 'Firefox']
 			}
 		},
 		compress: {
@@ -315,7 +320,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [
 		'default',
 		'dist',
-		'karma',
+		'karma:ci',
 		'compress:ko',
 		'compress:jquery',
 		'compress:zepto'
