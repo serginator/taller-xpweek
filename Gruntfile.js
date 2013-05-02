@@ -130,7 +130,8 @@ module.exports = function(grunt) {
 						xit: true,
 						chai: true,
 						bdd: true,
-						console: true
+						console: true,
+						before: true
 					}
 				},
 				files: {
