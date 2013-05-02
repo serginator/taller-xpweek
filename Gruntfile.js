@@ -237,6 +237,17 @@ module.exports = function(grunt) {
 					}
 				}
 			}
+		},
+		karma: {
+			options: {
+				runnerPort: 9999,
+				configFile: 'karma.conf.js'
+			},
+			ci: {
+				singleRun: true,
+				reporters: ['dots', 'junit'],
+				browsers: ['PhantomJS', 'Firefox', 'Chrome']
+			}
 		}
 	});
 
@@ -248,6 +259,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-karma');
 
 
 	grunt.registerTask('default', [
@@ -261,5 +273,11 @@ module.exports = function(grunt) {
 		'cssmin',
 		'requirejs',
 		'copy'
+	]);
+
+	grunt.registerTask('build', [
+		'default',
+		'dist',
+		'karma'
 	]);
 };
