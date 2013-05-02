@@ -246,7 +246,7 @@ module.exports = function(grunt) {
 			ci: {
 				singleRun: true,
 				reporters: ['dots', 'junit'],
-				browsers: ['PhantomJS', 'Firefox', 'Chrome']
+				browsers: ['PhantomJS', 'Firefox']
 			}
 		}
 	});
