@@ -184,7 +184,7 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		clean: [OUTPUT_DIR],
+		clean: [OUTPUT_DIR, 'build.zip'],
 		copy: {
 			main: {
 				files: [
@@ -249,6 +249,16 @@ module.exports = function(grunt) {
 				reporters: ['dots', 'junit'],
 				browsers: ['PhantomJS', 'Firefox']
 			}
+		},
+		compress: {
+			main: {
+				options: {
+					archive: 'build.zip'
+				},
+				files: [
+					{expand: true, cwd: 'dist/', src: ['**'], dest: 'todo/'}
+				]
+			}
 		}
 	});
 
@@ -261,6 +271,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-karma');
+	grunt.loadNpmTasks('grunt-contrib-compress');
 
 
 	grunt.registerTask('default', [
@@ -279,6 +290,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [
 		'default',
 		'dist',
-		'karma'
+		'karma',
+		'compress'
 	]);
 };
