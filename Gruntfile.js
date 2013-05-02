@@ -185,7 +185,7 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		clean: [OUTPUT_DIR, 'build.zip'],
+		clean: [OUTPUT_DIR, 'dist/<%= pkg.name %>-<%= pkg.version %>.zip'],
 		copy: {
 			main: {
 				files: [
@@ -248,16 +248,40 @@ module.exports = function(grunt) {
 			ci: {
 				singleRun: true,
 				reporters: ['dots', 'junit'],
-				browsers: ['PhantomJS', 'Firefox']
+				browsers: ['PhantomJS', 'Firefox', 'Chrome']
 			}
 		},
 		compress: {
 			main: {
 				options: {
-					archive: 'build.zip'
+					archive: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip'
 				},
 				files: [
 					{expand: true, cwd: 'dist/', src: ['**'], dest: 'todo/'}
+				]
+			},
+			ko: {
+				options: {
+					archive: 'dist/<%= pkg.name %>-ko-<%= pkg.version %>.zip'
+				},
+				files: [
+					{expand: true, cwd: 'dist/', src: ['todo_with_knockout.html','css/*.css','img/**','js/vendor/knockout*.js','js/todo-ko.min.js']}
+				]
+			},
+			jquery: {
+				options: {
+					archive: 'dist/<%= pkg.name %>-jquery-<%= pkg.version %>.zip'
+				},
+				files: [
+					{expand: true, cwd: 'dist/', src: ['todo_with_jquery.html','css/*.css','img/**','js/vendor/jquery*.js','js/todo-zepto_jquery.min.js']}
+				]
+			},
+			zepto: {
+				options: {
+					archive: 'dist/<%= pkg.name %>-zepto-<%= pkg.version %>.zip'
+				},
+				files: [
+					{expand: true, cwd: 'dist/', src: ['todo_with_zepto.html','css/*.css','img/**','js/vendor/zepto*.js','js/todo-zepto_jquery.min.js']}
 				]
 			}
 		}
@@ -292,6 +316,8 @@ module.exports = function(grunt) {
 		'default',
 		'dist',
 		'karma',
-		'compress'
+		'compress:ko',
+		'compress:jquery',
+		'compress:zepto'
 	]);
 };
