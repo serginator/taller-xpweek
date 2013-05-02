@@ -6,9 +6,9 @@
     "type": "git",
     "url": "git://github.com/serginator/taller-xpweek.git"
   },
-  scripts: {
+  "scripts": {
     "test": "grunt build"
-  }
+  },
   "keywords": [
     "todo",
     "grunt",
